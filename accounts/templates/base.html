@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Instagram{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            background: #fafafa;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid #dbdbdb;
+        }
+
+        .navbar-inner {
+            max-width: 935px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #262626;
+            text-decoration: none;
+            font-size: 28px;
+            font-family: Georgia, serif;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            margin-left: 16px;
+            color: #262626;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links span {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .page {
+            min-height: calc(100vh - 58px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+        }
+
+        .box {
+            width: 350px;
+            background: white;
+            border: 1px solid #dbdbdb;
+            padding: 32px 40px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0 0 24px;
+            font-size: 36px;
+            font-family: Georgia, serif;
+        }
+
+        input,
+        textarea,
+        select {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 9px;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            background: #fafafa;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 8px;
+            padding: 9px;
+            border: none;
+            border-radius: 8px;
+            background: #0095f6;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .link {
+            display: block;
+            margin-top: 18px;
+            color: #0095f6;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .error,
+        .errorlist {
+            color: #ed4956;
+            font-size: 13px;
+        }
+
+        .errorlist {
+            margin: 4px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .message {
+            margin-bottom: 12px;
+            color: #168a35;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a href="{% url 'accounts:index' %}" class="logo">Instagram</a>
+        <div class="nav-links">
+            {% if request.user.is_authenticated %}
+                <span>{{ request.user.username }}</span>
+                <a href="{% url 'accounts:logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}">Войти</a>
+                <a href="{% url 'accounts:register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+{% block content %}{% endblock %}
+</body>
+</html>
