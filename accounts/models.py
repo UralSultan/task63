@@ -18,7 +18,6 @@ class User(AbstractUser):
     bio = models.TextField(blank=True, verbose_name='Информация о пользователе')
     phone = models.CharField(max_length=20, blank=True, verbose_name='Номер телефона')
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, blank=True, verbose_name='Пол')
-
     posts_count = models.PositiveIntegerField(default=0, verbose_name='Количество публикаций')
     following_count = models.PositiveIntegerField(default=0, verbose_name='Количество подписок')
     followers_count = models.PositiveIntegerField(default=0, verbose_name='Количество подписчиков')
