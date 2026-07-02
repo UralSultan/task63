@@ -1,6 +1,8 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 
+from .models import User
 from .forms import RegisterForm
 
 
@@ -15,3 +17,25 @@ def register_view(request):
         form = RegisterForm()
 
     return render(request, 'accounts/register.html', {'form': form})
+
+
+def login_view(request):
+    context = {}
+
+    if request.method == 'POST':
+        login_or_email = request.POST.get('login')
+        password = request.POST.get('password')
+
+        username = login_or_email
+        user_by_email = User.objects.filter(email=login_or_email).first()
+        if user_by_email:
+            username = user_by_email.username
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('accounts:register')
+
+        context['error'] = 'Неверный логин/email или пароль.'
+
+    return render(request, 'accounts/login.html', context)
