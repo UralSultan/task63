@@ -1,0 +1,13 @@
+<div class="post-card">
+    <div class="post-author">{{ post.author.username }}</div>
+    <img src="{{ post.image.url }}" alt="Публикация {{ post.author.username }}" class="post-image">
+    <div class="post-body">
+        <strong>{{ post.likes_count }} отметок "Нравится"</strong>
+        {% if post.description %}
+            <p class="post-description">
+                <strong>{{ post.author.username }}</strong> {{ post.description }}
+            </p>
+        {% endif %}
+        <p>{{ post.comments_count }} комментариев</p>
+    </div>
+</div>

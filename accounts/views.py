@@ -1,10 +1,12 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import redirect, render
 
 from .models import User
-from .forms import RegisterForm
+from .forms import ProfileEditForm, RegisterForm
+from posts.models import Post
 
 
 def register_view(request):
@@ -21,7 +23,8 @@ def register_view(request):
 
 
 def index_view(request):
-    return render(request, 'accounts/index.html')
+    posts = Post.objects.all()
+    return render(request, 'accounts/index.html', {'posts': posts})
 
 
 def login_view(request):
@@ -53,4 +56,32 @@ def logout_view(request):
 
 @login_required(login_url='accounts:login')
 def profile_view(request):
-    return render(request, 'accounts/profile.html')
+    posts = request.user.posts.all()
+    return render(request, 'accounts/profile.html', {'posts': posts})
+
+
+@login_required(login_url='accounts:login')
+def profile_edit_view(request):
+    profile_form = ProfileEditForm(instance=request.user)
+    password_form = PasswordChangeForm(request.user)
+
+    if request.method == 'POST':
+        if 'profile_submit' in request.POST:
+            profile_form = ProfileEditForm(request.POST, request.FILES, instance=request.user)
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request, 'Профиль обновлен.')
+                return redirect('accounts:profile')
+
+        if 'password_submit' in request.POST:
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Пароль изменен.')
+                return redirect('accounts:profile')
+
+    return render(request, 'accounts/profile_edit.html', {
+        'profile_form': profile_form,
+        'password_form': password_form,
+    })

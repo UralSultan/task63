@@ -6,8 +6,15 @@
 <div class="content">
     {% include 'accounts/partial/profile_header.html' with user=request.user %}
 
-    <div class="profile-empty">
-        <p>Публикаций пока нет.</p>
+    <div class="post-list" style="margin-top: 30px;">
+        {% for post in posts %}
+            {% include 'posts/partial/post_card.html' %}
+        {% empty %}
+            <div class="profile-empty">
+                <p>Публикаций пока нет.</p>
+                <a href="{% url 'posts:create' %}" class="link">Добавить публикацию</a>
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

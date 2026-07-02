@@ -3,17 +3,28 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-<div class="page">
-    <div class="box">
-        <h1>Instagram</h1>
-        {% if request.user.is_authenticated %}
-            <p>Вы вошли как <strong>{{ request.user.username }}</strong>.</p>
-            <a href="{% url 'accounts:profile' %}" class="link">Перейти в профиль</a>
-        {% else %}
-            <p>Войдите или зарегистрируйтесь, чтобы продолжить.</p>
-            <a href="{% url 'accounts:login' %}" class="link">Войти</a>
-            <a href="{% url 'accounts:register' %}" class="link">Создать аккаунт</a>
-        {% endif %}
-    </div>
+<div class="content">
+    {% if request.user.is_authenticated %}
+        <div class="post-list">
+            {% for post in posts %}
+                {% include 'posts/partial/post_card.html' %}
+            {% empty %}
+                <div class="box" style="margin: 0 auto;">
+                    <h1>Instagram</h1>
+                    <p>Публикаций пока нет.</p>
+                    <a href="{% url 'posts:create' %}" class="link">Добавить первую публикацию</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="page">
+            <div class="box">
+                <h1>Instagram</h1>
+                <p>Войдите или зарегистрируйтесь, чтобы продолжить.</p>
+                <a href="{% url 'accounts:login' %}" class="link">Войти</a>
+                <a href="{% url 'accounts:register' %}" class="link">Создать аккаунт</a>
+            </div>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

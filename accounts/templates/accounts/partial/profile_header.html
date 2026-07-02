@@ -4,7 +4,10 @@
     </div>
 
     <div class="profile-info">
-        <h2 class="profile-name">{{ user.username }}</h2>
+        <div class="profile-top">
+            <h2 class="profile-name">{{ user.username }}</h2>
+            <a href="{% url 'accounts:profile_edit' %}" class="edit-profile-link">Редактировать профиль</a>
+        </div>
 
         <div class="profile-stats">
             <span><strong>{{ user.posts_count }}</strong> публикаций</span>
@@ -18,14 +21,6 @@
 
         {% if user.bio %}
             <div class="profile-bio">{{ user.bio|linebreaksbr }}</div>
-        {% endif %}
-
-        {% if user.phone %}
-            <p>Телефон: {{ user.phone }}</p>
-        {% endif %}
-
-        {% if user.gender %}
-            <p>Пол: {{ user.get_gender_display }}</p>
         {% endif %}
     </div>
 </div>

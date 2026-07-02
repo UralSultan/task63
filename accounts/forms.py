@@ -42,3 +42,20 @@ class RegisterForm(UserCreationForm):
 
         self.fields['avatar'].required = True
         self.fields['email'].required = True
+
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'phone', 'gender', 'avatar']
+        labels = {
+            'first_name': 'Имя',
+            'phone': 'Номер телефона',
+            'gender': 'Пол',
+            'avatar': 'Аватар',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
