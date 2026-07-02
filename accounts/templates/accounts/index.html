@@ -8,6 +8,7 @@
         <h1>Instagram</h1>
         {% if request.user.is_authenticated %}
             <p>Вы вошли как <strong>{{ request.user.username }}</strong>.</p>
+            <a href="{% url 'accounts:profile' %}" class="link">Перейти в профиль</a>
         {% else %}
             <p>Войдите или зарегистрируйтесь, чтобы продолжить.</p>
             <a href="{% url 'accounts:login' %}" class="link">Войти</a>

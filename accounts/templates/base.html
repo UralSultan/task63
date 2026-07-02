@@ -115,6 +115,60 @@
             color: #168a35;
             font-size: 14px;
         }
+
+        .content {
+            max-width: 935px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 70px;
+            align-items: center;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #dbdbdb;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #dbdbdb;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            margin: 0 0 18px;
+            font-size: 28px;
+            font-family: Arial, sans-serif;
+            font-weight: normal;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 18px;
+        }
+
+        .profile-stats span {
+            font-size: 16px;
+        }
+
+        .profile-bio {
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        .profile-empty {
+            padding: 50px 0;
+            text-align: center;
+            color: #777;
+        }
     </style>
 </head>
 <body>
@@ -124,6 +178,7 @@
         <div class="nav-links">
             {% if request.user.is_authenticated %}
                 <span>{{ request.user.username }}</span>
+                <a href="{% url 'accounts:profile' %}">Профиль</a>
                 <a href="{% url 'accounts:logout' %}">Выйти</a>
             {% else %}
                 <a href="{% url 'accounts:login' %}">Войти</a>

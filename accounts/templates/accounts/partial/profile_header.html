@@ -1,0 +1,31 @@
+<div class="profile-header">
+    <div>
+        <img src="{{ user.avatar.url }}" alt="{{ user.username }}" class="profile-avatar">
+    </div>
+
+    <div class="profile-info">
+        <h2 class="profile-name">{{ user.username }}</h2>
+
+        <div class="profile-stats">
+            <span><strong>{{ user.posts_count }}</strong> публикаций</span>
+            <span><strong>{{ user.followers_count }}</strong> подписчиков</span>
+            <span><strong>{{ user.following_count }}</strong> подписок</span>
+        </div>
+
+        {% if user.first_name %}
+            <strong>{{ user.first_name }}</strong>
+        {% endif %}
+
+        {% if user.bio %}
+            <div class="profile-bio">{{ user.bio|linebreaksbr }}</div>
+        {% endif %}
+
+        {% if user.phone %}
+            <p>Телефон: {{ user.phone }}</p>
+        {% endif %}
+
+        {% if user.gender %}
+            <p>Пол: {{ user.get_gender_display }}</p>
+        {% endif %}
+    </div>
+</div>
