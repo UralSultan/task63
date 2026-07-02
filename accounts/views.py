@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
-from django.shortcuts import redirect, render
+from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .models import User
 from .forms import ProfileEditForm, RegisterForm
@@ -84,4 +85,38 @@ def profile_edit_view(request):
     return render(request, 'accounts/profile_edit.html', {
         'profile_form': profile_form,
         'password_form': password_form,
+    })
+
+
+@login_required(login_url='accounts:login')
+def user_search_view(request):
+    query = request.GET.get('q', '')
+    users = User.objects.none()
+
+    if query:
+        users = User.objects.filter(
+            Q(username__icontains=query) |
+            Q(email__icontains=query) |
+            Q(first_name__icontains=query)
+        )
+
+    return render(request, 'accounts/user_search.html', {
+        'query': query,
+        'users': users,
+    })
+
+
+@login_required(login_url='accounts:login')
+def user_profile_view(request, username):
+    profile_user = get_object_or_404(User, username=username)
+    return render(request, 'accounts/user_profile.html', {'profile_user': profile_user})
+
+
+@login_required(login_url='accounts:login')
+def user_posts_view(request, username):
+    profile_user = get_object_or_404(User, username=username)
+    posts = profile_user.posts.all()
+    return render(request, 'accounts/user_posts.html', {
+        'profile_user': profile_user,
+        'posts': posts,
     })

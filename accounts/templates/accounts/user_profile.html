@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ profile_user.username }}{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="profile-header">
+        <div>
+            <img src="{{ profile_user.avatar.url }}" alt="{{ profile_user.username }}" class="profile-avatar">
+        </div>
+
+        <div class="profile-info">
+            <div class="profile-top">
+                <h2 class="profile-name">{{ profile_user.username }}</h2>
+                <a href="{% url 'accounts:user_posts' profile_user.username %}" class="edit-profile-link">
+                    Все публикации пользователя
+                </a>
+            </div>
+
+            {% if profile_user.first_name %}
+                <strong>{{ profile_user.first_name }}</strong>
+            {% endif %}
+
+            {% if profile_user.bio %}
+                <div class="profile-bio">{{ profile_user.bio|linebreaksbr }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
