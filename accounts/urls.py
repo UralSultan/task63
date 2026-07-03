@@ -7,6 +7,8 @@ from .views import (
     profile_edit_view,
     profile_view,
     register_view,
+    follow_user_view,
+    unfollow_user_view,
     user_posts_view,
     user_profile_view,
     user_search_view,
@@ -25,4 +27,6 @@ urlpatterns = [
     path('users/search/', user_search_view, name='user_search'),
     path('users/<str:username>/', user_profile_view, name='user_profile'),
     path('users/<str:username>/posts/', user_posts_view, name='user_posts'),
+    path('users/<str:username>/follow/', follow_user_view, name='follow_user'),
+    path('users/<str:username>/unfollow/', unfollow_user_view, name='unfollow_user'),
 ]

@@ -194,6 +194,26 @@
             font-weight: bold;
         }
 
+        .follow-button {
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: #0095f6;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .unfollow-button {
+            padding: 8px 14px;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            color: #262626;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
         .profile-stats {
             display: flex;
             gap: 30px;
@@ -218,6 +238,29 @@
         .post-list {
             max-width: 470px;
             margin: 0 auto;
+        }
+
+        .profile-posts {
+            max-width: 935px;
+            margin: 30px auto 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+        }
+
+        .profile-posts .post-card {
+            margin: 0;
+            border: none;
+        }
+
+        .profile-posts .post-author,
+        .profile-posts .post-body {
+            display: none;
+        }
+
+        .profile-posts .post-image {
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
         }
 
         .post-card {

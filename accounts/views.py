@@ -24,7 +24,10 @@ def register_view(request):
 
 
 def index_view(request):
-    posts = Post.objects.all()
+    posts = Post.objects.none()
+    if request.user.is_authenticated:
+        following_users = request.user.following.all()
+        posts = Post.objects.filter(Q(author__in=following_users) | Q(author=request.user)).order_by('-created_at')
     return render(request, 'accounts/index.html', {'posts': posts})
 
 
@@ -109,7 +112,13 @@ def user_search_view(request):
 @login_required(login_url='accounts:login')
 def user_profile_view(request, username):
     profile_user = get_object_or_404(User, username=username)
-    return render(request, 'accounts/user_profile.html', {'profile_user': profile_user})
+    is_following = request.user.following.filter(pk=profile_user.pk).exists()
+    posts = profile_user.posts.all()
+    return render(request, 'accounts/user_profile.html', {
+        'profile_user': profile_user,
+        'is_following': is_following,
+        'posts': posts,
+    })
 
 
 @login_required(login_url='accounts:login')
@@ -120,3 +129,33 @@ def user_posts_view(request, username):
         'profile_user': profile_user,
         'posts': posts,
     })
+
+
+@login_required(login_url='accounts:login')
+def follow_user_view(request, username):
+    profile_user = get_object_or_404(User, username=username)
+
+    if profile_user != request.user and not request.user.following.filter(pk=profile_user.pk).exists():
+        request.user.following.add(profile_user)
+        request.user.following_count += 1
+        profile_user.followers_count += 1
+        request.user.save()
+        profile_user.save()
+
+    return redirect('accounts:user_profile', username=profile_user.username)
+
+
+@login_required(login_url='accounts:login')
+def unfollow_user_view(request, username):
+    profile_user = get_object_or_404(User, username=username)
+
+    if profile_user != request.user and request.user.following.filter(pk=profile_user.pk).exists():
+        request.user.following.remove(profile_user)
+        if request.user.following_count > 0:
+            request.user.following_count -= 1
+        if profile_user.followers_count > 0:
+            profile_user.followers_count -= 1
+        request.user.save()
+        profile_user.save()
+
+    return redirect('accounts:user_profile', username=profile_user.username)

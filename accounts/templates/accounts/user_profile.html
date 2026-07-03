@@ -12,9 +12,19 @@
         <div class="profile-info">
             <div class="profile-top">
                 <h2 class="profile-name">{{ profile_user.username }}</h2>
-                <a href="{% url 'accounts:user_posts' profile_user.username %}" class="edit-profile-link">
-                    Все публикации пользователя
-                </a>
+                {% if profile_user != request.user %}
+                    {% if is_following %}
+                        <a href="{% url 'accounts:unfollow_user' profile_user.username %}" class="unfollow-button">Отписаться</a>
+                    {% else %}
+                        <a href="{% url 'accounts:follow_user' profile_user.username %}" class="follow-button">Подписаться</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="profile-stats">
+                <span><strong>{{ profile_user.posts_count }}</strong> публикаций</span>
+                <span><strong>{{ profile_user.followers_count }}</strong> подписчиков</span>
+                <span><strong>{{ profile_user.following_count }}</strong> подписок</span>
             </div>
 
             {% if profile_user.first_name %}
@@ -25,6 +35,16 @@
                 <div class="profile-bio">{{ profile_user.bio|linebreaksbr }}</div>
             {% endif %}
         </div>
+    </div>
+
+    <div class="profile-posts">
+        {% for post in posts %}
+            {% include 'posts/partial/post_card.html' %}
+        {% empty %}
+            <div class="profile-empty">
+                <p>Публикаций пока нет.</p>
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

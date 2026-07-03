@@ -11,8 +11,8 @@
             {% empty %}
                 <div class="box" style="margin: 0 auto;">
                     <h1>Instagram</h1>
-                    <p>Публикаций пока нет.</p>
-                    <a href="{% url 'posts:create' %}" class="link">Добавить первую публикацию</a>
+                    <p>В вашей ленте пока нет публикаций.</p>
+                    <a href="{% url 'accounts:user_search' %}" class="link">Найти пользователей</a>
                 </div>
             {% endfor %}
         </div>

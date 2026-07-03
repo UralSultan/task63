@@ -21,6 +21,13 @@ class User(AbstractUser):
     posts_count = models.PositiveIntegerField(default=0, verbose_name='Количество публикаций')
     following_count = models.PositiveIntegerField(default=0, verbose_name='Количество подписок')
     followers_count = models.PositiveIntegerField(default=0, verbose_name='Количество подписчиков')
+    following = models.ManyToManyField(
+        'self',
+        symmetrical=False,
+        related_name='followers',
+        blank=True,
+        verbose_name='Подписки',
+    )
 
     def __str__(self):
         return self.username
