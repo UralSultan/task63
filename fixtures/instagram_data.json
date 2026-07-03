@@ -1,0 +1,182 @@
+[
+{
+  "model": "accounts.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$b9OoaUc6112J1DtxyO1gg5$K17OTPOzSAMlBouxMf06Gvx+w2Vm+ICo5Y7eG29vLco=",
+    "last_login": "2026-07-02T12:37:35.183Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-07-02T09:18:38.819Z",
+    "email": "admin@gmail.com",
+    "avatar": "",
+    "bio": "",
+    "phone": "",
+    "gender": "",
+    "posts_count": 1,
+    "following_count": 0,
+    "followers_count": 0,
+    "groups": [],
+    "user_permissions": [],
+    "following": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$bTDhnbSjQiGlILxABglZjV$csoFRtRN6TYguwr73LcuodpVlReYo5lKR3U0mUV2Vh0=",
+    "last_login": "2026-07-03T07:14:05.826Z",
+    "is_superuser": false,
+    "username": "sultan_admin",
+    "first_name": "Султан",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-07-02T10:43:21.097Z",
+    "email": "uralbeksultan@gmail.com",
+    "avatar": "avatars/image.jpg",
+    "bio": "Python разработчик",
+    "phone": "+996501029674",
+    "gender": "male",
+    "posts_count": 1,
+    "following_count": 1,
+    "followers_count": 1,
+    "groups": [],
+    "user_permissions": [],
+    "following": [
+      21
+    ]
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 20,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$C3oDgBgmhKcLlAyuer7ra1$iSYQAWtBmlw6cmPO2yc/sEzzN0fuj2CQvHVhUKR7Vxw=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "sultan_ural",
+    "first_name": "Sultan",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-07-02T12:40:05.557Z",
+    "email": "Sultan@gmail.com",
+    "avatar": "avatars/3106773.png",
+    "bio": "BIO",
+    "phone": "+996701700840",
+    "gender": "male",
+    "posts_count": 0,
+    "following_count": 0,
+    "followers_count": 0,
+    "groups": [],
+    "user_permissions": [],
+    "following": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 21,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$hGXuIpyHCluPjs8ExsIL2u$PFoOjLtX/YH3glY2qwykkWxC2aUrlqsbEuc4niMQqdc=",
+    "last_login": "2026-07-02T12:42:00.164Z",
+    "is_superuser": false,
+    "username": "sultanural",
+    "first_name": "sultan uralov",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-07-02T12:41:49.613Z",
+    "email": "sultanural@gmail.com",
+    "avatar": "avatars/3106773_dfDdNVl.png",
+    "bio": "BOI",
+    "phone": "+996701700840",
+    "gender": "male",
+    "posts_count": 1,
+    "following_count": 1,
+    "followers_count": 1,
+    "groups": [],
+    "user_permissions": [],
+    "following": [
+      6
+    ]
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 2,
+  "fields": {
+    "author": 6,
+    "image": "posts/image.jpg",
+    "description": "Это я на природу выбрался",
+    "likes_count": 0,
+    "comments_count": 0,
+    "created_at": "2026-07-02T12:00:34.245Z",
+    "liked_users": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 7,
+  "fields": {
+    "author": 1,
+    "image": "posts/image_HUFXNOa.jpg",
+    "description": "Природа, красота",
+    "likes_count": 0,
+    "comments_count": 0,
+    "created_at": "2026-07-02T12:37:52.022Z",
+    "liked_users": []
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 11,
+  "fields": {
+    "author": 21,
+    "image": "posts/image_YKDFHWE.jpg",
+    "description": "природа",
+    "likes_count": 2,
+    "comments_count": 3,
+    "created_at": "2026-07-02T12:42:12.683Z",
+    "liked_users": [
+      6,
+      21
+    ]
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 3,
+  "fields": {
+    "post": 11,
+    "author": 21,
+    "text": "Шикарно",
+    "created_at": "2026-07-03T07:13:23.200Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 4,
+  "fields": {
+    "post": 11,
+    "author": 21,
+    "text": "Выглядит просто супер",
+    "created_at": "2026-07-03T07:13:37.220Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 5,
+  "fields": {
+    "post": 11,
+    "author": 6,
+    "text": "Согласен",
+    "created_at": "2026-07-03T07:14:44.640Z"
+  }
+}
+]
