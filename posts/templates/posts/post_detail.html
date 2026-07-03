@@ -4,8 +4,51 @@
 
 {% block content %}
 <div class="content">
-    <div class="post-list">
-        {% include 'posts/partial/post_card.html' %}
+    <div class="post-detail-card">
+        <div>
+            <img src="{{ post.image.url }}" alt="Публикация {{ post.author.username }}" class="post-detail-image">
+        </div>
+
+        <div class="post-detail-side">
+            <div class="post-author">{{ post.author.username }}</div>
+
+            <div class="comments-list">
+                {% if post.description %}
+                    <div class="comment-item">
+                        <strong>{{ post.author.username }}</strong> {{ post.description }}
+                    </div>
+                {% endif %}
+
+                {% for comment in comments %}
+                    <div class="comment-item">
+                        <strong>{{ comment.author.username }}</strong> {{ comment.text }}
+                    </div>
+                {% empty %}
+                    <p>Комментариев пока нет.</p>
+                {% endfor %}
+            </div>
+
+            <div class="post-body">
+                <div class="post-actions">
+                    <form action="{% url 'posts:like' post.pk %}" method="post">
+                        {% csrf_token %}
+                        {% if is_liked %}
+                            <button type="submit" class="icon-button like-button liked" title="Убрать лайк">♥</button>
+                        {% else %}
+                            <button type="submit" class="icon-button like-button" title="Лайкнуть">♡</button>
+                        {% endif %}
+                    </form>
+                </div>
+                <strong>{{ post.likes_count }} отметок "Нравится"</strong>
+                <p>{{ post.comments_count }} комментариев</p>
+            </div>
+
+            <form method="post" class="comment-form">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit" class="comment-button">Опубликовать</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

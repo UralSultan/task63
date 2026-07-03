@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import PostForm
+from .forms import CommentForm, PostForm
 from .models import Post
 
 
@@ -30,9 +30,28 @@ def post_create_view(request):
 def post_detail_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
     is_liked = post.liked_users.filter(pk=request.user.pk).exists()
+    comments = post.comments.all()
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+
+            post.comments_count += 1
+            post.save()
+
+            return redirect('posts:detail', pk=post.pk)
+    else:
+        comment_form = CommentForm()
+
     return render(request, 'posts/post_detail.html', {
         'post': post,
         'is_liked': is_liked,
+        'comments': comments,
+        'comment_form': comment_form,
     })
 
 
