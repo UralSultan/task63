@@ -1,7 +1,20 @@
 <div class="post-card">
     <div class="post-author">{{ post.author.username }}</div>
-    <img src="{{ post.image.url }}" alt="Публикация {{ post.author.username }}" class="post-image">
+    <a href="{% url 'posts:detail' post.pk %}">
+        <img src="{{ post.image.url }}" alt="Публикация {{ post.author.username }}" class="post-image">
+    </a>
     <div class="post-body">
+        <div class="post-actions">
+            <form action="{% url 'posts:like' post.pk %}" method="post">
+                {% csrf_token %}
+                {% if request.user in post.liked_users.all %}
+                    <button type="submit" class="icon-button like-button liked" title="Убрать лайк">♥</button>
+                {% else %}
+                    <button type="submit" class="icon-button like-button" title="Лайкнуть">♡</button>
+                {% endif %}
+            </form>
+        </div>
+
         <strong>{{ post.likes_count }} отметок "Нравится"</strong>
         {% if post.description %}
             <p class="post-description">

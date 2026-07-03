@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Публикация{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="post-list">
+        {% include 'posts/partial/post_card.html' %}
+    </div>
+</div>
+{% endblock %}

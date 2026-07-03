@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import PostForm
+from .models import Post
 
 
 @login_required(login_url='accounts:login')
@@ -23,3 +24,30 @@ def post_create_view(request):
         form = PostForm()
 
     return render(request, 'posts/post_create.html', {'form': form})
+
+
+@login_required(login_url='accounts:login')
+def post_detail_view(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    is_liked = post.liked_users.filter(pk=request.user.pk).exists()
+    return render(request, 'posts/post_detail.html', {
+        'post': post,
+        'is_liked': is_liked,
+    })
+
+
+@login_required(login_url='accounts:login')
+def post_like_view(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if post.liked_users.filter(pk=request.user.pk).exists():
+        post.liked_users.remove(request.user)
+        if post.likes_count > 0:
+            post.likes_count -= 1
+        post.save()
+    else:
+        post.liked_users.add(request.user)
+        post.likes_count += 1
+        post.save()
+
+    return redirect(request.META.get('HTTP_REFERER', 'accounts:index'))

@@ -8,6 +8,7 @@ class Post(models.Model):
     description = models.TextField(blank=True, verbose_name='Описание')
     likes_count = models.PositiveIntegerField(default=0, verbose_name='Количество лайков')
     comments_count = models.PositiveIntegerField(default=0, verbose_name='Количество комментариев')
+    liked_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True, verbose_name='Лайкнули')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
 
     class Meta:
